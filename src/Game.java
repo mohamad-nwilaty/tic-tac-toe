@@ -1,15 +1,33 @@
+import java.util.Scanner;;
 public class Game {
 
     static int[] board = new int[9];
+    static char next = 'O' ;
+    static boolean status = true ;
     public static void main(String[] args) throws Exception {
-        int n = 1 ;
+        
+
+        int initial = 1 ;
         for(int i=0 ; i<9 ; i++){
-            board[i] = n ;
-            n++ ;
+            board[i] = initial ;
+            initial++ ;
+        }
+        System.out.println("The first move is O :");
+        while (status) {
+            printBoard();
+
+            if(validMove(input())){
+                System.out.println("yes");
+            }
+            else{
+                System.out.println("No");
+            }
         }
         
-        printBoard();
+        
+       
     }
+
 
     public static void printBoard(){
         int index = 0;
@@ -31,5 +49,32 @@ public class Game {
             }
             
         }
+    }
+
+    public static boolean validMove(int input){ // this method insures that the int is in range and is not already taken
+        if(input > 9 || input <= 0){
+            System.out.println("Enter a number between 0 => 9");
+            return false ;
+        }
+        for(int i=0 ; i<9 ; i++){
+            if(input == board[i]) return true;
+        }
+        System.out.println("this move is already taken! ");
+        return false;
+    }
+
+    public static int input(){ // this function takes input and insures that it is an number else itreturns -1 which will 
+                                // return false in the validMove methode .
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Enter a number: ");
+        String line = scan.next();
+        try{
+            int n = Integer.valueOf(line);
+            return n;
+        }
+        catch(Exception e){
+            System.out.println("You didnt enter a Number dummy !");
+        }
+        return -1 ;
     }
 }
