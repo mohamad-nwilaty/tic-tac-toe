@@ -4,17 +4,16 @@ public class Game {
     static char[] board = new char[9];
     static char next = 'O' ;
     static boolean status = true ;
+    static int moveCount = 0;
     public static void main(String[] args) throws Exception {
-        
-
-        
-        for(int i=0 ; i<9 ; i++){
+    
+        for(int i=0 ; i<9 ; i++){ // initializing the board 
             board[i] = (char) (i + '1') ; // here it convets from ascii thats why we add '1' 
         }
 
         System.out.println("The first move is O :");
         while (status) {
-            if(!checkWining())
+            if(!checkWining() && moveCount != 9)
             {
                 System.out.println("Next to play: " + next );
                 printBoard();
@@ -22,12 +21,22 @@ public class Game {
                 if(validMove(move) ){
                     board[move -1] = next ;
                     changPlay(next);
+                    moveCount++ ;
                 }
             }
-
+            else{
+                printBoard();
+                changPlay(next);
+                if(moveCount == 9){
+                    System.out.println("It`s a draw !");
+                    status = false ;
+                }
+                else{
+                    System.out.println(next + " has won");
+                }
+            }
         }
-        changPlay(next);
-        System.out.println(next + " has won");
+        
         
        
     }
